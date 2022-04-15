@@ -1,7 +1,7 @@
 PROBLEMS=(tc jp-jc jp-cn jp-ov 4c)
 KRON_SIZE=16
 KRON_EDGES=128
-OPTIONS=-g ${KRON_SIZE} -k ${KRON_EDGES} -y 0.1
+OPTIONS="-g ${KRON_SIZE} -k ${KRON_EDGES} -y 0.1"
 
 for PROB in ${PROBLEMS[@]}; do	
 	echo "*******************************"
