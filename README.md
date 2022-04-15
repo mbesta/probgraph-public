@@ -61,14 +61,14 @@ this will overwrite the existing csv files in the result folders. If you just wa
 
 ### How to reproduce figure 3 (intersection estimator accuracy): #
 
-'cd src/src'
+`cd src/src`
 
-'g++ -o evaluate_intersection_estimators evaluate_intersection_estimators.cpp MurmurHash3.cpp'
+`g++ -o evaluate_intersection_estimators evaluate_intersection_estimators.cpp MurmurHash3.cpp`
 
-'./evaluate_intersection_estimators'
+`./evaluate_intersection_estimators`
 
-'cd ../..'
+`cd ../..`
 
-'python3 create_intersection_estimator_plots.py'
+`python3 create_intersection_estimator_plots.py`
 
 The plots can be found in the folder 'intersection_estimator_plots'. Please note that due to the random choice of hash functions, the plots will slightly vary each time they are re-generated.
