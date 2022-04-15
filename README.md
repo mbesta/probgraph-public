@@ -1,9 +1,9 @@
 
 ### Prerequirisites: #
 
-  *boost 1.76
-  *g++ 8.3.0
-  *python 3.7
+  * boost 1.76
+  * g++ 8.3.0
+  * python 3.7
 
 ### How to execute: #
 
