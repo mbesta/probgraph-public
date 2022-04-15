@@ -3,7 +3,7 @@ export BENCH_PATH=${2}
 export GRAPHS_PATH=${3}
 export RESULTS_DIR=${4}
 
-THREADS=( 16 )
+THREADS=( 32 )
 
 if [ "${problem}" = "tc" ]; then
   export BINARIES=( ${problem}_base ${problem}_bf ${problem}_1h ${problem}_doulion ${problem}_colorful )
