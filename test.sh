@@ -1,4 +1,4 @@
-PROBLEMS=(tc jp-jc jp-cn jp-ov)
+PROBLEMS=(tc jp-jc jp-cn jp-ov 4c)
 KRON_SIZE=17
 KRON_EDGES=256
 
