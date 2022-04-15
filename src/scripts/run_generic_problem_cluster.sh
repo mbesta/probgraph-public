@@ -4,7 +4,7 @@ export GRAPHS_PATH=${3}
 export RESULTS_FILE=${4}
 
 
-THREADS=( 16 )
+THREADS=( 32 )
 
 if [ "${problem}" = "tc" ]; then
   export BINARIES=( ${problem}_base ${problem}_bf ${problem}_1h ${problem}_kh ${problem}_kmv ${problem}_doulion ${problem}_colorful )
