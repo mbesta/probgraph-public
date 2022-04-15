@@ -19,6 +19,7 @@ Now tun the test to check that everything works:
 `./test.sh`
 
 or you can try it yourself by running any of the executables in probgraph-public/src/
+
 the general formulation is
 
 `./src/PROBLEM_APPROXIMATOR OPTIONS`
