@@ -25,17 +25,17 @@ the general formulation is
 `./src/PROBLEM_APPROXIMATOR OPTIONS`
 
 possible choices for PROBLEM are:
-..* `tc` : Triangle Counting
-..* `jp-jc` : Clustering (Jaccard)
-..* `jp-ov` : Clustering (Overlap)
-..* `jp-cn` : Clustering (Common neigh.)
-..* `4c`: 4-cliques
+  * `tc` : Triangle Counting
+  * `jp-jc` : Clustering (Jaccard)
+  * `jp-ov` : Clustering (Overlap)
+  * `jp-cn` : Clustering (Common neigh.)
+  * `4c`: 4-cliques
 
-possible choices for APPROXIMATOR are
-..* `base` : Baseline
-..* `1h`: one-hash
-..* `bf`: Bloom Filter
-..* `colorful`, `doulion` : only available for Triangle Counting
+possible choices for APPROXIMATOR are:
+  * `base` : Baseline
+  * `1h`: one-hash
+  * `bf`: Bloom Filter
+  * `colorful`, `doulion` : only available for Triangle Counting
 
 For example, 
 
