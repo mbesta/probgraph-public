@@ -1,18 +1,19 @@
 
 ### Prerequirisites: #
 
-*boost 1.76
-*openmp
-*c++11
-*python 3.7
+..*boost 1.76
+..*openmp
+..*c++11
+..*python 3.7
 
 ### How to execute: #
 
 Run the following commands from the main probgraph-public folder:
-
-`cd src`
-`make`
-`cd ../` 
+```
+cd src
+make
+cd ../ 
+```
 
 Now tun the test to check that everything works:
 
