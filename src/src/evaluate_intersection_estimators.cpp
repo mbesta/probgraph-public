@@ -85,7 +85,7 @@ int evaluate_estimators_on_graph(std::string name, std::vector<int> all_b, std::
 			}
 
 			// Open file to store results
-			std::string out_path = "../../patrick/plots/results_estimators/intersection_" + name + "_" + std::to_string(b) + "_" + std::to_string(s) + ".csv";
+			std::string out_path = "../../intersection_estimator_results/intersection_" + name + "_" + std::to_string(b) + "_" + std::to_string(s) + ".csv";
 			std::ofstream outfile;
 			outfile.open(out_path);
 
@@ -130,7 +130,7 @@ int evaluate_estimators_on_graph(std::string name, std::vector<int> all_b, std::
 }
 
 int main(){
-	std::string config_file= "../../patrick/plots/config/graphs_intersection.csv";
+	std::string config_file= "../../intersection_estimator_config/graphs_intersection.csv";
     std::fstream cfgfile(config_file, std::ios_base::in);
 
 	std::vector<int> all_b = {1,4};

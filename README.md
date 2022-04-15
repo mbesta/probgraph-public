@@ -57,3 +57,18 @@ Then, collect all results using
 this will overwrite the existing csv files in the result folders. If you just want to generate the images from the existing data, skip the two previous steps and just run
 
 `./generate_images.sh`
+
+
+### How to reproduce figure 3 (intersection estimator accuracy): #
+
+'cd src/src'
+
+'g++ -o evaluate_intersection_estimators evaluate_intersection_estimators.cpp MurmurHash3.cpp'
+
+'./evaluate_intersection_estimators'
+
+'cd ../..'
+
+'python3 create_intersection_estimator_plots.py'
+
+The plots can be found in the folder 'intersection_estimator_plots'. Please note that due to the random choice of hash functions, the plots will slightly vary each time they are re-generated.
