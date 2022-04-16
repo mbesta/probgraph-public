@@ -9,3 +9,5 @@ for e in ${EXPS[@]}; do
 	echo figures real
 	python src/scripts/make_comparison_images.py --input-csv exp_paolo_real/${e}-real.csv --image-folder real_graphs_images/ --kron False --img_format pdf
 done
+
+python src/scripts/make_scaling_plots.py
