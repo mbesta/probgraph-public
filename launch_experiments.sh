@@ -9,7 +9,7 @@ done
 #real graphs experiments
 for PROB in ${PROBLEMS[@]}; do
 	mkdir real_graphs_results/${PROB}
-	./src/scripts/run_generic_problem_real_graphs.sh ${PROB} ./src/ ./src/graphs/ ./real_graphs_results/${PROB}/
+	./src/scripts/run_generic_problem_real_graphs.sh ${PROB} ./src/ ./src/graphs/ ./real_graph_results/${PROB}/
 done
 
 #strong scaling experiments
