@@ -2,7 +2,7 @@ PROBLEMS=(tc jp-jc jp-cn jp-ov)
 
 for PROB in ${PROBLEMS[@]}; do
 	echo collecting kronecker results for ${PROB}
-	python src/scripts/collect_into_csv.py --input-dir kronecker_graph_results/${PROB}/ --output-name kronecker_graph_results/${PROB}-kron.csv
+	python src/scripts/collect_into_csv.py --input-dir kronecker_graphs_results/${PROB}/ --output-name kronecker_graphs_results/${PROB}-kron.csv
 done
 
 for PROB in ${PROBLEMS[@]}; do
