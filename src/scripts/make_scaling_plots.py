@@ -124,7 +124,7 @@ def create_one_plot(problem, filename, plotname, show_lin_speedup, show_edge_den
 				handletextpad=0.1, handlelength = 0.9, 					
 				columnspacing = 1, labelspacing = 0.2, 
 				)
-	plt.savefig("plots/" + plotname + ".pdf")
+	plt.savefig("../../scaling_images/" + plotname + ".pdf")
 	plt.close()
 
 def create_all_plots():
