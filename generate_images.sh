@@ -3,7 +3,7 @@ mkdir kronecker_graphs_images
 mkdir real_graphs_images
 mkdir scaling_images
 
-EXPS=(tc jp-jc jp-cn jp-ov)
+EXPS=(tc jp-jc jp-cn jp-ov 4c)
 for e in ${EXPS[@]}; do
 	echo images for $e
 	echo figures kroneckers
