@@ -48,7 +48,7 @@ In order to run the experiments on real graphs, you will have to download them i
 
 To reproduce the experiments in the paper, run 
 
-`./launch_all_experiments` (use the _CLUSTER version if you are on a cluster) 
+`./launch_experiments` (use the _CLUSTER version if you are on a cluster) 
 
 Then, collect all results using 
 
