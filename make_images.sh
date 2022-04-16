@@ -1,4 +1,7 @@
 
+mkdir kronecker_graphs_images
+mkdir real_graphs_images
+mkdir scaling_images
 
 EXPS=(tc jp-jc jp-cn jp-ov)
 for e in ${EXPS[@]}; do
