@@ -333,8 +333,7 @@ def create_all_plots():
 		"bn-mouse_brain_1.el",
 	]
 
-	#problem_list = ["TC","JP-JC","JP-CN","JP-OV","4C"]
-	problem_list = ["TC",]
+	problem_list = ["TC","JP-JC","JP-CN","JP-OV"]
 
 	graph_list_debug = ["kronecker"]
 
