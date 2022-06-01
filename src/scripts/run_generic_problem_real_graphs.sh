@@ -6,12 +6,14 @@ export RESULTS_DIR=${4}
 THREADS=( 32 )
 
 if [ "${problem}" = "tc" ]; then
-  export BINARIES=( ${problem}_base ${problem}_bf ${problem}_1h ${problem}_doulion ${problem}_colorful )
+  export BINARIES=( ${problem}_base ${problem}_bf ${problem}_1h ${problem}_doulion ${problem}_colorful ${problem}_pgp ${problem}_redex)
 else
-  export BINARIES=( ${problem}_base ${problem}_bf ${problem}_1h)
+  export BINARIES=( ${problem}_base ${problem}_bf ${problem}_1h ${problem}_pgp ${problem}_redex)
 fi
 
-PARAM_THs=(0.00003 0.0001 0.0003 0.001 0.003 0.01 0.03 0.1 0.3 0.5 1.0 2.0)
+REDEX_THs=(0.5)
+BF_THs=(0.5)
+OH_THs=(0.01)
 CLUSTER=0.1
 
 function create_launch {
@@ -57,34 +59,37 @@ for T in ${THREADS[@]}; do
       FILE_EXT="${fullpath##*.}"
 
       echo "======= Processing graph ${GRAPH_NAME}"
-
       for BINARY in ${BINARIES[@]}; do
         approx_scheme=$(echo ${BINARY} | cut -d'_' -f 2)
         
         if [ "${approx_scheme}" = "base" ]; then
-          export ARGS="-s -f ${fullpath} -a -n 1"
-          create_launch
-        elif [ "${approx_scheme}" = "doulion" ]; then
-          export ARGS="-s -f ${fullpath} -a -n 1 -p 0.8"
-          create_launch
+          	export ARGS="-s -f ${fullpath} -a -n 1 -y ${CLUSTER}"
+          	create_launch
         elif [ "${approx_scheme}" = "colorful" ]; then
-          export ARGS="-s -f ${fullpath} -a -n 1 -p 0.5"
-          create_launch
-        elif [ "${approx_scheme}" = "kmv" ] || [ "${approx_scheme}" = "1h" ] || [ "${approx_scheme}" = "kh" ]; then
-          for PARAM_TH in ${PARAM_THs[@]}; do
-            export ARGS="-s -f ${fullpath} -t ${PARAM_TH} -n 1"
+          	export ARGS="-s -f ${fullpath} -a -n 1 -p 0.5"
+          	create_launch
+        elif [ "${approx_scheme}" = "doulion" ]; then
+	        export ARGS="-s -f ${fullpath} -a -n 1 -p 0.8"
+          	create_launch
+        elif [ "${approx_scheme}" = "pgp" ] || [ "${approx_scheme}" = "redex" ]; then
+          for PARAM_TH in ${REDEX_THs[@]}; do
+            export ARGS="-s -f ${fullpath} -a -n 1 -t ${PARAM_TH} -y ${CLUSTER}"
             create_launch
-          done
-        else
-          for PARAM_TH in ${PARAM_THs[@]}; do
-            export ARGS="-s -f ${fullpath} -t ${PARAM_TH} -b -1 -n 1"
+	  done
+        elif [ "${approx_scheme}" = "1h" ]; then
+	  for PARAM_TH in ${OH_THs[@]}; do
+            export ARGS="-s -f ${fullpath} -t ${PARAM_TH} -n 1 -y ${CLUSTER}"
             create_launch
-          done
+    	  done
+        elif [ "${approx_scheme}" = "bf" ]; then
+          for PARAM_TH in ${BF_THs[@]}; do 
+            export ARGS="-s -f ${fullpath} -t ${PARAM_TH} -b -1 -n 1 -y ${CLUSTER}"
+            create_launch
+          done          
         fi
       done
     fi
   done
 done
-
 
 

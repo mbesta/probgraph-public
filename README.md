@@ -35,6 +35,8 @@ possible choices for APPROXIMATOR are:
   * `base` : Baseline
   * `1h`: one-hash
   * `bf`: Bloom Filter
+  * `pgp`: Partial Graph Processing
+  * `redex`: Reduced Execution
   * `colorful`, `doulion` : only available for Triangle Counting
 
 For example, 
@@ -44,7 +46,7 @@ For example,
 will run Triangle counting (TC) using Bloom Filters (BF) on a Kronecker graph with 2^17 nodes and 256 avg. degree (-g 17 -k 256).
 Run any executable with the -h flag to see the available options
 
-In order to run the experiments on real graphs, you will have to download them in the probgraph-sc/src/graphs/ folder. You can find a list of graphs in the paper together with references to the datasets. In alternative, you can download your own graphs in the graphs folder. Be sure they are in the ordered edgelist format. 
+In order to run the experiments on real graphs, you will have to download them in the probgraph-sc/src/graphs/ folder. Some small graphs are already in the folder. You can find a list of graphs in the paper together with references to the datasets. In alternative, you can download your own graphs in the graphs folder. Be sure they are in the ordered edgelist format. 
 
 To reproduce the experiments in the paper, run 
 

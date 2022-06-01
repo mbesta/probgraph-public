@@ -34,7 +34,7 @@ endif
 #KERNELS = tc_bloom_naive tc_minhash tc_minhash_block tc_bloom_block tc_bloom tc_bloom_myquery bloom_mc bloom_block_tc tc libbloom_tc testSet.cc # bc bfs cc cc_afforest pr sssp tc
 #
 #KERNELS = tc tc_doulion tc_colorful tc_variable tc_bloom tc_bloom_block link_prediction_bloom tc_bloom_naive tc_kmv tc_kmv_block tc_minhash tc_minhash_block nclique_brute nclique_kmv nclique_kmv_v2 nclique_minhash nclique_minhash_v2 nclique_std nclique_std_v2 clustering_bloom clustering_kmv clustering_minhash  testSet #for testing all algorithms
-KERNELS = tc_doulion tc_colorful tc_bf tc_kh tc_1h tc_kmv tc_base jp-cn_bf jp-cn_kh jp-cn_1h jp-cn_kmv jp-cn_base jp-jc_bf jp-jc_kh jp-jc_1h jp-jc_kmv jp-jc_base jp-ov_bf jp-ov_kh jp-ov_1h jp-ov_kmv jp-ov_base 4c_bf 4c_bf 4c_1h 4c_kh 4c_kmv 4c_base
+KERNELS = tc_doulion tc_colorful tc_bf tc_kh tc_1h tc_kmv tc_base tc_pgp tc_redex tc_auto_approx_v1 tc_auto_approx_v2 jp-cn_bf jp-cn_kh jp-cn_1h jp-cn_kmv jp-cn_base jp-cn_pgp jp-cn_redex jp-jc_bf jp-jc_kh jp-jc_1h jp-jc_kmv jp-jc_base jp-jc_pgp jp-jc_redex jp-ov_bf jp-ov_kh jp-ov_1h jp-ov_kmv jp-ov_base jp-ov_pgp jp-ov_redex 4c_bf 4c_bf 4c_1h 4c_kh 4c_kmv 4c_base 4c_pgp 4c_redex
 
 SUITE = $(KERNELS)
 
