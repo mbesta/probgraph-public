@@ -12,11 +12,10 @@
 #include "../graph.h"
 #include "../pvector.h"
 
-#include "../sisa.h"
-
-
 
 /*
+Modified version of the following source code:
+
 GAP Benchmark Suite
 Kernel: Triangle Counting (TC)
 Author: Scott Beamer
@@ -47,26 +46,47 @@ to relabel the graph, we use the heuristic in WorthRelabelling.
 
 using namespace std;
 
-size_t OrderedCount(const Graph &g, std::string graphName, int threads) {
+size_t OrderedCount(const Graph &g, float tau, std::string graphName, int threads, float precision) {
     double tc_time = -1;
     Timer t;
     t.Start();
     size_t total = 0;
-#pragma omp parallel for reduction(+ : total) schedule(dynamic, 64)
+
+	int processing_threshold = (int)((float)g.num_nodes() * precision);
+
+    #pragma omp parallel for reduction(+ : total) schedule(dynamic, 64)
     for (NodeID u=0; u < g.num_nodes(); u++) {
-        for (NodeID v : g.out_neigh(u)) {
-            if (v > u)
-                break;
-            auto it = g.out_neigh(u).begin();
-            for (NodeID w : g.out_neigh(v)) {
-                if (w > v)
-                    break;
-                while (*it < w)
-                    it++;
-                if (w == *it)
-                    total++;
-            }
-        }
+		if (rand() % g.num_nodes() < processing_threshold){
+			for (NodeID v : g.out_neigh(u)) {
+				if (v > u)
+					break;
+
+				auto it1 = g.out_neigh(v).begin();
+				auto it2 = g.out_neigh(u).begin();
+				auto end1 = g.out_neigh(v).end();
+				auto end2 = g.out_neigh(u).end();
+				int64_t m = 0;
+				int64_t n = 0;
+
+				while (it1 != end1 && it2 != end2) {
+					m++;
+					if (*it1 < *it2) {
+						it1++;
+					} else if (*it1 > *it2) {
+						it2++;
+					} else {
+						it1++;
+						it2++;
+						n++;
+					}
+				}
+				m += (end1 - it1) + (end2 - it2);
+
+				if (n * 1.0 / m > tau) {
+					total++;
+				}
+			}
+		}
     }
 
     t.Stop();
@@ -74,61 +94,44 @@ size_t OrderedCount(const Graph &g, std::string graphName, int threads) {
     PrintTime("Intersection time", t.Seconds());
     tc_time = t.Seconds();
 
-    auto threshold = 0;
+    auto threshold = precision;
     auto k = 0;
     auto m = 0;
     auto pp_time = 0;
     auto approx_str_size = 0;
     auto initial_csr_size = g.getSize() / (1024.0 * 1024.0); //MB
 
-    std::cout << "ooo triangles: " << total << std::endl;
-
     // RRR - this means that a given line is dedicated to the runtime results
     // the columns are as follows:
     // RRR [Problem] [approximation-scheme] [baseline (problem + approx-scheme)] [graph-name] [thread count] [number of vertices] [number of edges] [threshold (KMV parameter)] [k (another KMV parameter-number of hash functions] [preprocessing-time] [tc-time] [total-runtime] [approximated TC count]
 
-    std::cout << "RRR TC BASE TC_BASE " << graphName << " " << threads << " " << g.num_nodes() << " " << g.num_edges() << " " << threshold << " " << k << " "  << m << " " << pp_time << " " << tc_time << " " << pp_time + tc_time <<  " " << total << std::endl;
+    std::cout << "RRR JP-JC REDEX JP-JC_REDEX " << graphName << " " << threads << " " << g.num_nodes() << " " << g.num_edges() << " " << threshold << " " << k << " "  << m << " " << tau << " " << pp_time << " " << tc_time << " " << pp_time + tc_time <<  " " << total << std::endl;
 
     // SSS - this means that a given line is dedicated to the size results
     // the columns are as follows:
     // SSS [Problem] [approximation-scheme] [baseline (problem + approx-scheme)] [graph-name] [thread count] [number of vertices] [number of edges] [threshold (KMV parameter)] [k (another KMV parameter-number of hash functions] [size of BF structures] [size of the original standard CSR (total)] [total size of both] [approximated TC count]
 
-    std::cout << "SSS TC BASE TC_BASE " << graphName << " " << threads << " " << g.num_nodes() << " " << g.num_edges() << " " << threshold << " " << k << " " << m << " " << approx_str_size << " " << initial_csr_size << " " << approx_str_size + initial_csr_size << " " << total << std::endl;
+    std::cout << "SSS JP-JC REDEX JP-JC_REDEX " << graphName << " " << threads << " " << g.num_nodes() << " " << g.num_edges() << " " << threshold << " " << k << " " << m << " " << tau << " " << approx_str_size << " " << initial_csr_size << " " << approx_str_size + initial_csr_size << " " << total << std::endl;
 
 
     return total;
 }
 
 
-void PrintTriangleStats(const Graph &g, size_t total_triangles) {
-    cout << total_triangles << " triangles" << endl;
+void PrintClusterStats(const Graph &g, int64_t size) {
+    cout << size << " edges in the clustering " <<endl;
 }
 
 
 // Compares with simple serial implementation that uses std::set_intersection
 bool TCVerifier(const Graph &g, size_t test_total, const CLApp &cli) {
-    size_t total = 0;
-    vector<NodeID> intersection;
-    intersection.reserve(g.num_nodes());
-    for (NodeID u : g.vertices()) {
-        for (NodeID v : g.out_neigh(u)) {
-            auto new_end = set_intersection(g.out_neigh(u).begin(),
-                                            g.out_neigh(u).end(),
-                                            g.out_neigh(v).begin(),
-                                            g.out_neigh(v).end(),
-                                            intersection.begin());
-            intersection.resize(new_end - intersection.begin());
-            total += intersection.size();
-        }
-    }
-    total = total / 6;  // each triangle was counted 6 times
-    cout << "acc: " << (float)((float)test_total-total)/total*100  << "\% error: true " << total << " counted " << test_total << endl;
-    return total == test_total;
+    return true;
 }
 
 
 int main(int argc, char* argv[]) {
-    CLApp cli(argc, argv, "triangle count");
+
+    CLSIMDApp cli(argc, argv, "triangle count");
     if (!cli.ParseArgs())
         return -1;
     Builder b(cli);
@@ -139,9 +142,9 @@ int main(int argc, char* argv[]) {
     }
 
     auto ct = [&cli] (const Graph& g){
-        return OrderedCount(g, cli.getGraphBasename(), cli.getThreadNum());
+        return OrderedCount(g, cli.tau(), cli.getGraphBasename(), cli.getThreadNum(), cli.treshold());
     };
 
-    BenchmarkKernel(cli, g, ct, PrintTriangleStats, TCVerifier);
+    BenchmarkKernel(cli, g, ct, PrintClusterStats, TCVerifier);
     return 0;
 }

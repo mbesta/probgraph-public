@@ -1,11 +1,5 @@
 PROBLEMS=(tc jp-jc jp-cn jp-ov)
 
-#kronecker graphs experiments
-for PROB in ${PROBLEMS[@]}; do
-	mkdir kronecker_graph_results/${PROB}/
-	./src/scripts/run_generic_problem_kronecker_graphs.sh ${PROB} ./src/ ./kronecker_graphs_results/${PROB}/
-done
-
 #real graphs experiments
 for PROB in ${PROBLEMS[@]}; do
 	mkdir real_graphs_results/${PROB}

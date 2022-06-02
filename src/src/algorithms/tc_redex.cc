@@ -1,6 +1,3 @@
-// Copyright (c) 2015, The Regents of the University of California (Regents)
-// See LICENSE.txt for license details
-
 #include <algorithm>
 #include <cinttypes>
 #include <iostream>
@@ -14,9 +11,9 @@
 
 #include "../sisa.h"
 
-
-
 /*
+A modified version of the following source code:
+
 GAP Benchmark Suite
 Kernel: Triangle Counting (TC)
 Author: Scott Beamer
@@ -44,56 +41,57 @@ degree distribution is sufficiently non-uniform. To decide whether or not
 to relabel the graph, we use the heuristic in WorthRelabelling.
 */
 
-
 using namespace std;
 
-size_t OrderedCount(const Graph &g, std::string graphName, int threads) {
+size_t OrderedCount(const Graph &g, std::string graphName, int threads, float precision) {
     double tc_time = -1;
     Timer t;
     t.Start();
     size_t total = 0;
+	int processing_threshold = (int)((float)g.num_nodes() * precision);
+
 #pragma omp parallel for reduction(+ : total) schedule(dynamic, 64)
     for (NodeID u=0; u < g.num_nodes(); u++) {
-        for (NodeID v : g.out_neigh(u)) {
-            if (v > u)
-                break;
-            auto it = g.out_neigh(u).begin();
-            for (NodeID w : g.out_neigh(v)) {
-                if (w > v)
-                    break;
-                while (*it < w)
-                    it++;
-                if (w == *it)
-                    total++;
-            }
-        }
+		if(rand() % g.num_nodes() < processing_threshold){
+			for (NodeID v : g.out_neigh(u)) {
+				if (v > u)
+					break;
+				auto it = g.out_neigh(u).begin();
+				for (NodeID w : g.out_neigh(v)) {
+					if (w > v)
+						break;
+					while (*it < w)
+						it++;
+					if (w == *it)
+						total++;
+				}
+			}
+		}
     }
 
     t.Stop();
-    //  PrintTime("TC runtime", t.Seconds());
+
     PrintTime("Intersection time", t.Seconds());
     tc_time = t.Seconds();
 
-    auto threshold = 0;
+    auto threshold = precision;
     auto k = 0;
     auto m = 0;
     auto pp_time = 0;
     auto approx_str_size = 0;
     auto initial_csr_size = g.getSize() / (1024.0 * 1024.0); //MB
 
-    std::cout << "ooo triangles: " << total << std::endl;
-
     // RRR - this means that a given line is dedicated to the runtime results
     // the columns are as follows:
     // RRR [Problem] [approximation-scheme] [baseline (problem + approx-scheme)] [graph-name] [thread count] [number of vertices] [number of edges] [threshold (KMV parameter)] [k (another KMV parameter-number of hash functions] [preprocessing-time] [tc-time] [total-runtime] [approximated TC count]
 
-    std::cout << "RRR TC BASE TC_BASE " << graphName << " " << threads << " " << g.num_nodes() << " " << g.num_edges() << " " << threshold << " " << k << " "  << m << " " << pp_time << " " << tc_time << " " << pp_time + tc_time <<  " " << total << std::endl;
+    std::cout << "RRR TC REDEX TC_REDEX " << graphName << " " << threads << " " << g.num_nodes() << " " << g.num_edges() << " " << threshold << " " << k << " "  << m << " " << pp_time << " " << tc_time << " " << pp_time + tc_time <<  " " << total << std::endl;
 
     // SSS - this means that a given line is dedicated to the size results
     // the columns are as follows:
     // SSS [Problem] [approximation-scheme] [baseline (problem + approx-scheme)] [graph-name] [thread count] [number of vertices] [number of edges] [threshold (KMV parameter)] [k (another KMV parameter-number of hash functions] [size of BF structures] [size of the original standard CSR (total)] [total size of both] [approximated TC count]
 
-    std::cout << "SSS TC BASE TC_BASE " << graphName << " " << threads << " " << g.num_nodes() << " " << g.num_edges() << " " << threshold << " " << k << " " << m << " " << approx_str_size << " " << initial_csr_size << " " << approx_str_size + initial_csr_size << " " << total << std::endl;
+    std::cout << "SSS TC REDEX TC_REDEX " << graphName << " " << threads << " " << g.num_nodes() << " " << g.num_edges() << " " << threshold << " " << k << " " << m << " " << approx_str_size << " " << initial_csr_size << " " << approx_str_size + initial_csr_size << " " << total << std::endl;
 
 
     return total;
@@ -104,6 +102,9 @@ void PrintTriangleStats(const Graph &g, size_t total_triangles) {
     cout << total_triangles << " triangles" << endl;
 }
 
+bool TCVerifier_null(const Graph &g, size_t approx_total, const CLApp &cli) {
+    return true;
+}
 
 // Compares with simple serial implementation that uses std::set_intersection
 bool TCVerifier(const Graph &g, size_t test_total, const CLApp &cli) {
@@ -128,7 +129,8 @@ bool TCVerifier(const Graph &g, size_t test_total, const CLApp &cli) {
 
 
 int main(int argc, char* argv[]) {
-    CLApp cli(argc, argv, "triangle count");
+
+    CLSIMDApp cli(argc, argv, "triangle count");
     if (!cli.ParseArgs())
         return -1;
     Builder b(cli);
@@ -139,9 +141,9 @@ int main(int argc, char* argv[]) {
     }
 
     auto ct = [&cli] (const Graph& g){
-        return OrderedCount(g, cli.getGraphBasename(), cli.getThreadNum());
+        return OrderedCount(g, cli.getGraphBasename(), cli.getThreadNum(), cli.treshold());
     };
 
-    BenchmarkKernel(cli, g, ct, PrintTriangleStats, TCVerifier);
+    BenchmarkKernel(cli, g, ct, PrintTriangleStats, TCVerifier_null);
     return 0;
 }
