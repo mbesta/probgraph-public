@@ -4,13 +4,18 @@ KRON_EDGES=128
 OPTIONS="-g ${KRON_SIZE} -k ${KRON_EDGES} -y 0.1"
 
 for PROB in ${PROBLEMS[@]}; do	
-	echo "*******************************"
-	echo "******RUNNING ${PROB} with BASELINE"
+	echo "\n*****************************************************************"
+	echo "*************RUNNING ${PROB} with BASELINE **********************"
+	echo "*****************************************************************"
 	./src/${PROB}_base ${OPTIONS}
 	
-	echo "******RUNNING ${PROB} with One-Hash"
+	echo "\n*****************************************************************"
+	echo "*************RUNNING ${PROB} with BASELINE **********************"
+	echo "*****************************************************************"
 	./src/${PROB}_1h ${OPTIONS} -t 0.01
 	
-	echo "******RUNNING ${PROB} with Bloom Filters"
+	echo "\n*****************************************************************"
+	echo "*************RUNNING ${PROB} with BASELINE **********************"
+	echo "*****************************************************************"
 	./src/${PROB}_bf ${OPTIONS} -t 0.5
 done
