@@ -81,6 +81,8 @@ size_t OrderedCount(const Graph &g, std::string graphName, int threads) {
     auto approx_str_size = 0;
     auto initial_csr_size = g.getSize() / (1024.0 * 1024.0); //MB
 
+    std::cout << "ooo triangles: " << total << std::endl;
+
     // RRR - this means that a given line is dedicated to the runtime results
     // the columns are as follows:
     // RRR [Problem] [approximation-scheme] [baseline (problem + approx-scheme)] [graph-name] [thread count] [number of vertices] [number of edges] [threshold (KMV parameter)] [k (another KMV parameter-number of hash functions] [preprocessing-time] [tc-time] [total-runtime] [approximated TC count]
