@@ -12,10 +12,10 @@ done
 
 for PROB in ${PROBLEMS[@]}; do
 	echo collecting strong results for ${PROB}
-	python src/scripts/collect_into_csv.py --input-dir scaling_results/strong_results/${PROB}/ --output-name scaling_experiments/strong_scaling_${PROB}.csv
+	python src/scripts/collect_into_csv.py --input-dir scaling_results/strong_results/${PROB}/ --output-name scaling_results/strong_scaling_${PROB}.csv
 done
 
 for PROB in ${PROBLEMS[@]}; do
 	echo collecting weak results for ${PROB}
-	python src/scripts/collect_into_csv.py --input-dir scaling_results/weak_results/${PROB}/ --output-name scaling_experiments/weak_scaling_${PROB}.csv
+	python src/scripts/collect_into_csv.py --input-dir scaling_results/weak_results/${PROB}/ --output-name scaling_results/weak_scaling_${PROB}.csv
 done
