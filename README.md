@@ -80,7 +80,7 @@ Analysis of the accuracy of ProbGraph estimators for intersection.
 
 ### Reproducing the results on intersection estimator accuracy: #
 
-Run the following code to reproduce our accuracy study for the interesection estimator: 
+Run the following commands to reproduce our accuracy study for the interesection estimator: 
 
 `cd src/src`
 
