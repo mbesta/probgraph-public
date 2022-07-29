@@ -64,7 +64,7 @@ this will overwrite the existing csv files in the result folders. If you just wa
 `./generate_images.sh`
 
 
-### How to reproduce figure 3 (intersection estimator accuracy): #
+### Reproducing the results on intersection estimator accuracy: #
 
 `cd src/src`
 
@@ -76,4 +76,4 @@ this will overwrite the existing csv files in the result folders. If you just wa
 
 `python3 create_intersection_estimator_plots.py`
 
-The plots can be found in the folder 'intersection_estimator_plots'. Please note that due to the random choice of hash functions, the plots will slightly vary each time they are re-generated.
+The plots will be saved in the folder 'intersection_estimator_plots'. Please note that due to the random choice of hash functions, the plots will slightly vary each time they are re-generated.
