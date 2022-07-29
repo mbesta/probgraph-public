@@ -66,8 +66,7 @@ this will overwrite the existing csv files in the result folders. If you just wa
 ### Sample images: #
 
  Analysis of performance, accuracy and memory for the BF and MH ProbGraph approximators (Jaccard Similarity Clustering) 
- 
-![Analysis of performance, accuracy, and memory of ProbGraph](/sample_images/barplot_test_real_JP-JC.pdf)
+ ![Analysis of performance, accuracy, and memory of ProbGraph](/sample_images/barplot_test_real_JP-JC.pdf)
 
 Accuracy and Speed-up for various measures estimated with ProbGraph on Kronecker graphs.
 ![Advantages of PG for Kronecker graphs.](/sample_images/main-results-kron___low-mem.pdf)
