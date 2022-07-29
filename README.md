@@ -15,7 +15,7 @@ cd ../
 
 ### Using ProbGraph: #
 
-Now tun the test to check that everything works:
+Now run the test to check that everything works:
 
 `./test.sh`
 
