@@ -65,12 +65,22 @@ this will overwrite the existing csv files in the result folders. If you just wa
 
 ### Sample images: #
 
+ Analysis of performance, accuracy and memory for the BF and MH ProbGraph approximators (Jaccard Similarity Clustering) 
 ![Analysis of performance, accuracy, and memory of ProbGraph](/sample_images/barplot_test_real_JP-JC.pdf)
 
+Accuracy and Speed-up for various measures estimated with ProbGraph on Kronecker graphs.
+![Advantages of PG for Kronecker graphs.](/sample_images/main-results-kron___low-mem.pdf)
 
+Weak scaling behaviour of ProbGraph and some representative baselines for the TC problem.
+![Weak scaling for the TC problem](/sample_images/plot_weak_scaling_tc.pdf)
 
 
 ### Reproducing the results on intersection estimator accuracy: #
+
+Analysis of the accuracy of ProbGraph estimators for intersection.
+![Analysis of the accuracy of ProbGraph estimators for intersection.](/sample_images/plot_intersection_b4_mem33.pdf)
+
+Run the following code to reproduce our accuracy study for the interesection estimator: 
 
 `cd src/src`
 
