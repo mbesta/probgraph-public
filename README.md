@@ -75,10 +75,10 @@ Weak scaling behaviour of ProbGraph and some representative baselines for the TC
 ![Weak scaling for the TC problem](/sample_images/plot_weak_scaling_tc.pdf)
 
 
-### Reproducing the results on intersection estimator accuracy: #
-
 Analysis of the accuracy of ProbGraph estimators for intersection.
 ![Analysis of the accuracy of ProbGraph estimators for intersection.](/sample_images/plot_intersection_b4_mem33.pdf)
+
+### Reproducing the results on intersection estimator accuracy: #
 
 Run the following code to reproduce our accuracy study for the interesection estimator: 
 
