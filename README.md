@@ -63,6 +63,10 @@ this will overwrite the existing csv files in the result folders. If you just wa
 
 `./generate_images.sh`
 
+### Sample images: #
+
+
+
 
 ### Reproducing the results on intersection estimator accuracy: #
 
