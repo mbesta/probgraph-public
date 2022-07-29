@@ -65,6 +65,8 @@ this will overwrite the existing csv files in the result folders. If you just wa
 
 ### Sample images: #
 
+![Analysis of performance/accuracy/memory of ProbGraph](/sample_images/barplot_test_real_JP-JC.pdf)
+
 
 
 
